@@ -434,6 +434,15 @@ namespace MvcAuth.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult Details()
+        {
+
+            var me = User.Identity.Name;
+            var fred = UserManager.Users.SingleOrDefault(b => b.UserName == me);
+            return View();
+        }
+
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
