@@ -17,7 +17,7 @@ namespace MvcAuth.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        ApplicationDbContext db;
         public AccountController()
         {
         }
@@ -268,6 +268,7 @@ namespace MvcAuth.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
+            
             return View();
         }
 
@@ -442,7 +443,36 @@ namespace MvcAuth.Controllers
             return View(fred);
         }
 
+        // GET: Categories/Edit/5
+        public ActionResult Edit()                                           //edit action with id sent in as an int
+        {
 
+            var me = User.Identity.Name;
+            var fred = UserManager.Users.SingleOrDefault(b => b.UserName == me);
+            return View(fred);                                                 //returns view to category
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "FirstName,LastName,Address,PostCode,BirthDate,Email")] ApplicationUser formuser, string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            user.FirstName = formuser.FirstName;
+            user.LastName = formuser.LastName;
+            await UserManager.UpdateAsync(user);
+            //if (ModelState.IsValid)               
+            //{
+            //    //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+            //    await UserManager.UpdateAsync(user);
+            //    //return RedirectToAction("Index");
+            //    return View(User);
+            //}
+            var me = User.Identity.Name;
+            var fred = UserManager.Users.SingleOrDefault(b => b.UserName == me);
+            return View(fred);
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -503,3 +533,5 @@ namespace MvcAuth.Controllers
         #endregion
     }
 }
+
+               
