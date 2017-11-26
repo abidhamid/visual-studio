@@ -41,5 +41,7 @@ namespace MvcAuth.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<MvcAuth.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -439,7 +439,7 @@ namespace MvcAuth.Controllers
 
             var me = User.Identity.Name;
             var fred = UserManager.Users.SingleOrDefault(b => b.UserName == me);
-            return View();
+            return View(fred);
         }
 
 
